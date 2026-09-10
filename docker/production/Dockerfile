@@ -1,0 +1,47 @@
+# 1. Install dependencies and build app
+FROM node:18.18.2-bullseye AS builder
+
+WORKDIR /app
+
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* ./
+RUN yarn --frozen-lockfile
+
+# Copy source files
+COPY . .
+
+# This will do the trick for public environment variables
+COPY .env.production .env
+COPY .env.production .env.production
+
+RUN yarn build
+
+# 2. Production image, copy all the files and run next
+FROM node:18.18.2-bullseye-slim AS runner
+
+WORKDIR /app
+
+COPY package.json ./
+
+# Install dependencies
+RUN yarn install --production
+
+# Create nodejs user and group
+RUN groupadd -r nodejs && useradd -r -g nodejs nextjs
+
+COPY --from=builder /app/public ./public
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/ ./.next
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/next.config.mjs ./next.config.mjs
+
+USER nextjs
+
+ENV NODE_ENV=production
+ENV PORT=3000
+
+EXPOSE 3000
+
+CMD ["yarn", "start"]
