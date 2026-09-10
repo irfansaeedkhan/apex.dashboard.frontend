@@ -18,9 +18,9 @@ const DisplayMessage: React.FC<Props> = ({ title, description, children }) => {
           <Image
             src="/images/logo-dark.svg"
             alt="email sent"
-            width={100}
-            height={100}
-            className="size-16 object-cover"
+            width={64}
+            height={64}
+            className="h-16 w-auto object-contain"
           />
           <div className="flex flex-col gap-6">
             <h2 className="text-center font-bai-jamjuree text-xl font-semibold leading-normal text-blue-shade-1 md:text-[34px]">

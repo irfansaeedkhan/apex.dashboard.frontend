@@ -10,8 +10,22 @@ const demoUser = {
 };
 
 const today = "2026-09-05";
+const PAGE_SIZE = 5;
 
-const dashboard = {
+const allTransactions = [
+  { Amount: 2400, Status: "Approved", Transaction_Date: today, Transaction: "Meta asset purchase", TxHash: "0x8f2a91bc91bc91bc", Type: "Deposit" },
+  { Amount: 680, Status: "Pending", Transaction_Date: "2026-09-02", Transaction: "Monthly withdrawal", TxHash: "0x1a6d70fe70fe70fe", Type: "Withdrawal" },
+  { Amount: 1250, Status: "Approved", Transaction_Date: "2026-08-28", Transaction: "Referral commission", TxHash: "0x4ce10a920a920a92", Type: "Deposit" },
+  { Amount: 940, Status: "Approved", Transaction_Date: "2026-08-20", Transaction: "Meta asset purchase", TxHash: "0x7d3ebb1abb1abb1a", Type: "Deposit" },
+  { Amount: 300, Status: "Rejected", Transaction_Date: "2026-08-14", Transaction: "Withdrawal request", TxHash: "0x2b11ce40ce40ce40", Type: "Withdrawal" },
+  { Amount: 510, Status: "Approved", Transaction_Date: "2026-08-08", Transaction: "Land reward payout", TxHash: "0x9c44aa11aa11aa11", Type: "Deposit" },
+  { Amount: 175, Status: "Pending", Transaction_Date: "2026-08-01", Transaction: "Weekly withdrawal", TxHash: "0x55ee221122112211", Type: "Withdrawal" },
+  { Amount: 2200, Status: "Approved", Transaction_Date: "2026-07-22", Transaction: "Meta asset purchase", TxHash: "0xab90123412341234", Type: "Deposit" },
+  { Amount: 88, Status: "Approved", Transaction_Date: "2026-07-15", Transaction: "Referral bonus", TxHash: "0xcd56789078907890", Type: "Deposit" },
+  { Amount: 450, Status: "Rejected", Transaction_Date: "2026-07-05", Transaction: "Withdrawal request", TxHash: "0xef11223344556677", Type: "Withdrawal" },
+];
+
+const dashboardBase = {
   Available_Balance: 8420.5,
   Company_Lands_Value: 136000,
   Contract_Expiry_Date: "2027-05-30",
@@ -19,9 +33,8 @@ const dashboard = {
   Equity_Percentage: 12.5,
   Lands_Value: 42800,
   Minted_Lands: 136,
-  Number_of_Pages: 2,
   Onwhitdraw_balance: 1200,
-  Page_size: 5,
+  Page_size: PAGE_SIZE,
   Owned_Lands: 42,
   ROI_Last_Month: 3.8,
   ROI_Until_Now: 18.4,
@@ -63,20 +76,17 @@ const dashboard = {
       ],
     },
   ],
-  transactions_list: [
-    { Amount: 2400, Status: "Approved", Transaction_Date: today, Transaction: "Meta asset purchase", TxHash: "0x8f2a...91bc", Type: "Deposit" },
-    { Amount: 680, Status: "Pending", Transaction_Date: "2026-09-02", Transaction: "Monthly withdrawal", TxHash: "0x1a6d...70fe", Type: "Withdrawal" },
-    { Amount: 1250, Status: "Approved", Transaction_Date: "2026-08-28", Transaction: "Referral commission", TxHash: "0x4ce1...0a92", Type: "Deposit" },
-    { Amount: 940, Status: "Approved", Transaction_Date: "2026-08-20", Transaction: "Meta asset purchase", TxHash: "0x7d3e...bb1a", Type: "Deposit" },
-    { Amount: 300, Status: "Rejected", Transaction_Date: "2026-08-14", Transaction: "Withdrawal request", TxHash: "0x2b11...ce40", Type: "Withdrawal" },
-  ],
 };
 
-const rewards = [
-  { Amount: 1250, Date: "2026-08-28", Type: "Sale" },
-  { Amount: 680, Date: "2026-08-21", Type: "Referral" },
-  { Amount: 940, Date: "2026-08-12", Type: "Sale" },
-  { Amount: 420, Date: "2026-08-03", Type: "Referral" },
+const allRewards = [
+  { Amount: 749.566303979227, Date: "2026-09-10", Type: "Sale" },
+  { Amount: 680.25, Date: "2026-08-28", Type: "Referral" },
+  { Amount: 940.1, Date: "2026-08-21", Type: "Sale" },
+  { Amount: 420.75, Date: "2026-08-12", Type: "Referral" },
+  { Amount: 312.5, Date: "2026-08-03", Type: "Sale" },
+  { Amount: 188.4, Date: "2026-07-25", Type: "Referral" },
+  { Amount: 505.0, Date: "2026-07-14", Type: "Sale" },
+  { Amount: 96.2, Date: "2026-07-02", Type: "Referral" },
 ];
 
 const affiliates = Array.from({ length: 8 }, (_, index) => ({
@@ -103,18 +113,48 @@ const invoices = [
 
 export const demoProfile = { ...demoUser, Phone: "+1 555 010 2026", Country: "United States" };
 
+function paginate<T>(items: T[], page: number, pageSize = PAGE_SIZE) {
+  const safePage = Math.max(1, page || 1);
+  const start = (safePage - 1) * pageSize;
+  return {
+    page: safePage,
+    Number_of_Pages: Math.max(1, Math.ceil(items.length / pageSize)),
+    items: items.slice(start, start + pageSize),
+  };
+}
+
 export function getMockResponse(url = "", method = "get", config: any = {}) {
   const path = url.split("?")[0].replace(/^\//, "");
   const offset = Number(config?.params?.offset ?? 0);
-  const page = Number(config?.params?.Page ?? config?.data?.Page ?? Math.floor(offset / 5) + 1);
+  const page = Number(
+    config?.params?.Page ??
+      config?.params?.page ??
+      config?.data?.Page ??
+      Math.floor(offset / PAGE_SIZE) + 1,
+  );
 
   if (path === "auth/login") return demoUser;
   if (path === "auth/register") return { ...demoUser, message: "Demo account created" };
   if (path === "me") return demoUser;
   if (path === "profile/profile") return demoProfile;
-  if (path === "Dashboard") return dashboard;
+  if (path === "Dashboard") {
+    const paged = paginate(allTransactions, page);
+    return {
+      ...dashboardBase,
+      Number_of_Pages: paged.Number_of_Pages,
+      Page_size: PAGE_SIZE,
+      transactions_list: paged.items,
+    };
+  }
   if (path === "showorderinfo") return { SinglePackCost: 1000, SinglePackDuration: 36, StartDate: "2026-07-03" };
-  if (path === "RevenuesHistory") return { Number_of_Pages: 1, Page_size: 5, RevenuesHistory: rewards };
+  if (path === "RevenuesHistory") {
+    const paged = paginate(allRewards, page);
+    return {
+      Number_of_Pages: paged.Number_of_Pages,
+      Page_size: PAGE_SIZE,
+      RevenuesHistory: paged.items,
+    };
+  }
   if (path === "user/referrals/count") return 12;
   if (path === "user/referrals") return { offset: (page - 1) * 5, limit: 5, total: affiliates.length, data: affiliates.slice((page - 1) * 5, page * 5) };
   if (path === "LeaderBoard") return { Number_of_Pages: 2, LeaderBoard: leaderboard.slice((page - 1) * 5, page * 5) };

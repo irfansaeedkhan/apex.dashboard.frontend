@@ -143,30 +143,34 @@ export const InvoiceTable = () => {
                 >
                   <TableCell element={"td"}>{invoice?.Duration}</TableCell>
                   <TableCell element={"td"}>{invoice?.Qty}</TableCell>
-                  <TableCell element={"td"} className="flex items-center gap-1">
-                    <Image
-                      src={"/images/USDT.png"}
-                      alt="usdt"
-                      width={100}
-                      height={18}
-                      className="size-[18px]"
-                    />
-                    <span>{invoice?.SinglePackCost ?? "N/A"} USDT</span>
+                  <TableCell element={"td"}>
+                    <span className="inline-flex items-center gap-1">
+                      <Image
+                        src={"/images/USDT.png"}
+                        alt="usdt"
+                        width={18}
+                        height={18}
+                        className="h-[18px] w-auto shrink-0"
+                      />
+                      <span>{invoice?.SinglePackCost ?? "N/A"} USDT</span>
+                    </span>
                   </TableCell>
                   <TableCell element={"td"}>
                     {invoice?.Date
                       ? dayjs(invoice?.Date).format("DD MMM YYYY")
                       : "N/A"}
                   </TableCell>
-                  <TableCell element={"td"} className="flex items-center gap-1">
-                    <Image
-                      src={"/images/USDT.png"}
-                      alt="usdt"
-                      width={100}
-                      height={18}
-                      className="size-[18px]"
-                    />
-                    <span>{invoice?.Amount ?? "N/A"} USDT</span>
+                  <TableCell element={"td"}>
+                    <span className="inline-flex items-center gap-1">
+                      <Image
+                        src={"/images/USDT.png"}
+                        alt="usdt"
+                        width={18}
+                        height={18}
+                        className="h-[18px] w-auto shrink-0"
+                      />
+                      <span>{invoice?.Amount ?? "N/A"} USDT</span>
+                    </span>
                   </TableCell>
                   <TableCell element={"td"} className="text-center">
                     <button
@@ -209,8 +213,11 @@ export const InvoiceTable = () => {
                   </button>
                   <button
                     onClick={handleNextPage}
-                    disabled={page === invoicesData?.Number_of_Pages}
-                    className="flex w-full items-center justify-center gap-2 rounded-lg border-[1px]  border-[#1414141F] bg-white px-4 py-2 text-sm text-blue-shade-1 disabled:opacity-50"
+                    disabled={
+                      !invoicesData?.Number_of_Pages ||
+                      page >= invoicesData.Number_of_Pages
+                    }
+                    className="flex w-full items-center justify-center gap-2 rounded-lg border-[1px] border-[#1414141F] bg-white px-4 py-2 text-sm text-blue-shade-1 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     Next <HiMiniArrowRight />
                   </button>

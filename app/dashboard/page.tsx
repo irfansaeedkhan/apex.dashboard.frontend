@@ -10,22 +10,15 @@ import {
   YearDropdown,
 } from "@/components/dashboard/year-drop-down";
 import { DashboardApiResponse } from "@/lib/auth";
-import { getDashboard } from "@/lib/auth/get-dashboard";
 import { useAuthStore } from "@/stores/auth.store";
 import { CgSpinner } from "react-icons/cg";
 import { TransactionChartMobile } from "@/components/dashboard/transaction-chart-mobile";
-import {
-  GetShowOrdersDetailsResponse,
-  getShowOrdersDetails,
-} from "@/lib/auth/get-show-order-details";
+import { GetShowOrdersDetailsResponse } from "@/lib/auth/get-show-order-details";
 
 import { TransactionTableMobile } from "@/components/dashboard/transaction-table-mobile";
 import Countdown, { CountdownRendererFn } from "react-countdown";
 import { CupIcon, TimerIcon } from "@/assets/svgs";
-import {
-  GetRewardListResponse,
-  getShowRewardListDetails,
-} from "@/lib/auth/get-rewards-list";
+import { GetRewardListResponse } from "@/lib/auth/get-rewards-list";
 import { getMockResponse } from "@/lib/mock-api";
 
 const Dashboard = () => {
@@ -38,7 +31,7 @@ const Dashboard = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [rewardListpage, setRewardListPage] = useState(1);
   const [rewardListTotalPages, setRewardListTotalPages] = useState(0);
-  const [selectedYear, setSelectedYear] = useState<string>("2024");
+  const [selectedYear, setSelectedYear] = useState<string>("2026");
   const [dashboardData, setDashboardData] =
     useState<DashboardApiResponse | null>(null);
   const [rewardList, setRewardList] = useState<GetRewardListResponse>(null);
@@ -52,149 +45,44 @@ const Dashboard = () => {
   const getDashboardDetails = useCallback(async () => {
     setLoading(true);
     try {
-      // const res = await getDashboard(page);
-      // setDashboardData(res);
-      const res = {
-        Available_Balance: 0,
-        Company_Lands_Value: 136000,
-        Contract_Expiry_Date: "Thu, 30 May 2024 17:49:18 GMT",
-        Contract_Start_Date: "Thu, 30 May 2024 17:49:18 GMT",
-        Equity_Percentage: 0,
-        Lands_Value: 0,
-        Minted_Lands: 136,
-        Number_of_Pages: 0,
-        Onwhitdraw_balance: 0,
-        Owned_Lands: 0,
-        Page_size: 5,
-        ROI_Last_Month: 0,
-        ROI_Until_Now: 0,
-        Supply_Max: 12000,
-        Wallet_Address: "0x381E97Fb7531BF0E1795B02fa9Db203940B78D10",
-        return_stats_arrays: [
-          {
-            percentages: [
-              {
-                January: 2.6,
-              },
-              {
-                February: 2.1,
-              },
-              {
-                March: 2.7,
-              },
-              {
-                April: 3.4,
-              },
-              {
-                May: 4.2,
-              },
-              {
-                June: 1.9,
-              },
-              {
-                July: 3.1,
-              },
-              {
-                August: 2.3,
-              },
-              {
-                September: 2.7,
-              },
-              {
-                October: 3.1,
-              },
-              {
-                November: 2.8,
-              },
-              {
-                December: 3.2,
-              },
-            ],
-            year: "2023",
-          },
-          {
-            percentages: [
-              {
-                January: 2.1,
-              },
-              {
-                February: 2.5,
-              },
-              {
-                March: 2.7,
-              },
-              {
-                April: 3.4,
-              },
-              {
-                May: 2.2,
-              },
-              {
-                May: 0,
-              },
-            ],
-            year: "2024",
-          },
-        ],
-        transactions_list: [
-          {
-            Amount: Math.random() * 1000,
-            Status: "Pending",
-            Transaction_Date: new Date().toISOString().slice(0, 10),
-            Transaction: "Transaction 1-1",
-            TxHash: "TxHash-1-1",
-            Type: ["Deposit", "Withdrawal"][Math.floor(Math.random() * 2)],
-          },
+      const res = getMockResponse("Dashboard", "post", {
+        data: { Page: page },
+      }) as DashboardApiResponse;
 
-          {
-            Amount: Math.random() * 1000,
-            Status: "Pending",
-            Transaction_Date: new Date().toISOString().slice(0, 10),
-            Transaction: "Transaction 2-1",
-            TxHash: "TxHash-2-1",
-            Type: ["Deposit", "Withdrawal"][Math.floor(Math.random() * 2)],
-          },
-
-          // Transaction 3 objects
-          {
-            Amount: Math.random() * 1000,
-            Status: "Approved",
-            Transaction_Date: new Date().toISOString().slice(0, 10),
-            Transaction: "Transaction 3-1",
-            TxHash: "TxHash-3-1",
-            Type: ["Deposit", "Withdrawal"][Math.floor(Math.random() * 2)],
-          },
-        ],
-      };
-
-      setTotalPages(res?.Number_of_Pages);
+      setDashboardData(res);
+      setTotalPages(res?.Number_of_Pages || 1);
       const years = res.return_stats_arrays?.map((item) => item.year);
-      if (years) {
+      if (years?.length) {
         const uniqueYears = Array.from(new Set(years));
         const dropdownOptions = uniqueYears.map((year) => ({
           value: year,
           label: year,
         }));
         setDataYears(dropdownOptions);
-        const graphData = res.return_stats_arrays?.find(
-          (item) => item.year === "2024",
+        setSelectedYear((current) =>
+          uniqueYears.includes(current) ? current : uniqueYears[0],
         );
-        setGraphData(graphData?.percentages || []);
       } else {
-        setDataYears([{ value: "2024", label: "2024" }]);
+        setDataYears([{ value: "2026", label: "2026" }]);
       }
     } catch (e) {
       console.log(e);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [page]);
+
+  useEffect(() => {
+    if (!dashboardData?.return_stats_arrays) return;
+    const graph = dashboardData.return_stats_arrays.find(
+      (item) => item.year === selectedYear,
+    );
+    setGraphData(graph?.percentages || []);
+  }, [dashboardData, selectedYear]);
 
   const getOrdersDetails = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await getShowOrdersDetails();
-      // setGetOrdersDetailsData(res);
       setGetOrdersDetailsData({
         SinglePackCost: 1000,
         SinglePackDuration: 36,
@@ -210,40 +98,10 @@ const Dashboard = () => {
   const getRewardsListDetails = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await getShowRewardListDetails(rewardListpage);
-      // setRewardList(res);
-      setRewardList({
-        Number_of_Pages: 0,
-        Page_size: 5,
-        RevenuesHistory: [
-          {
-            Amount: Math.random() * 1000,
-            Date: new Date().toISOString().slice(0, 10),
-            Type: "Sale",
-          },
-          {
-            Amount: Math.random() * 1000,
-            Date: new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000)
-              .toISOString()
-              .slice(0, 10),
-            Type: "Sale",
-          },
-          {
-            Amount: Math.random() * 1000,
-            Date: new Date(new Date().getTime() - 3 * 24 * 60 * 60 * 1000)
-              .toISOString()
-              .slice(0, 10),
-            Type: "Sale",
-          },
-          {
-            Amount: Math.random() * 1000,
-            Date: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000)
-              .toISOString()
-              .slice(0, 10),
-            Type: "Sale",
-          },
-        ],
-      });
+      const res = getMockResponse("RevenuesHistory", "post", {
+        data: { Page: rewardListpage },
+      }) as GetRewardListResponse;
+      setRewardList(res);
       setRewardListTotalPages(res?.Number_of_Pages || 1);
     } catch (error) {
       console.log(error);
@@ -256,16 +114,6 @@ const Dashboard = () => {
     getOrdersDetails();
     getDashboardDetails();
     getRewardsListDetails();
-
-    setDashboardData(getMockResponse("Dashboard") as DashboardApiResponse);
-    setRewardList(
-      getMockResponse("RevenuesHistory") as GetRewardListResponse,
-    );
-    setGetOrdersDetailsData({
-      SinglePackCost: 1000,
-      SinglePackDuration: 36,
-      StartDate: "2024-07-03",
-    });
   }, [getDashboardDetails, getOrdersDetails, getRewardsListDetails]);
 
   const handleYearChange = (year: string) => {

@@ -35,9 +35,9 @@ export default function AuthLayoutWithoutBackground({
                 <Image
                   src="/images/logo-dark.svg"
                   alt="email sent"
-                  width={100}
-                  height={100}
-                  className="size-16 object-cover"
+                  width={64}
+                  height={64}
+                  className="h-16 w-auto object-contain"
                 />
                 {children}
               </div>

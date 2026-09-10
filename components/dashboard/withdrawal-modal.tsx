@@ -115,28 +115,28 @@ export const WithdrawalModal: React.FC<Props> = ({
               <label htmlFor="amount" className="text-xs text-blue-shade-1">
                 Amount
               </label>
-              <div className="flex h-12 w-full items-center rounded-[10px] border border-gray-shade-1/10 bg-white px-4 py-3 text-xs shadow-1 focus-within:border-blue-shade-1">
+              <div className="flex h-12 w-full items-center gap-2 rounded-[10px] border border-gray-shade-1/10 bg-white px-2 py-3 text-xs shadow-1 focus-within:border-blue-shade-1 sm:px-4">
                 <CustomNumberInput
                   name="amount"
                   id="amount"
                   value={formFields.amount}
                   onChange={handleonChange}
                   placeholder="Min. amount: 0.001"
-                  className="flex-grow focus:outline-none"
+                  className="min-w-0 flex-1 bg-transparent focus:outline-none"
                 />
-                <div className="flex items-center gap-1.5">
-                  <span className="flex items-center gap-1.5 rounded-full border border-black-shade-1/[0.12] bg-white p-1.5 text-[11px] font-medium">
+                <div className="flex shrink-0 items-center gap-1 sm:gap-1.5">
+                  <span className="flex items-center gap-1 rounded-full border border-black-shade-1/[0.12] bg-white px-1.5 py-1 text-[11px] font-medium sm:gap-1.5 sm:p-1.5">
                     <Image
                       src={"/images/USDT.png"}
                       alt="usdt"
-                      width={100}
+                      width={18}
                       height={18}
-                      className="size-[18px]"
+                      className="h-[18px] w-auto shrink-0"
                     />
                     <span>USDT</span>
                   </span>
                   <span
-                    className="cursor-pointer rounded-full bg-black-shade-5 px-3 py-1.5 text-xs font-medium text-white"
+                    className="cursor-pointer rounded-full bg-black-shade-5 px-2.5 py-1.5 text-xs font-medium text-white sm:px-3"
                     onClick={() =>
                       setFormFields({
                         ...formFields,

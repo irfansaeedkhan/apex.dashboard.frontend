@@ -106,7 +106,7 @@ const NewCardsDesignForLaptop: React.FC<Props> = ({
                   alt="USDT"
                   width={20}
                   height={20}
-                  className="flex size-5 flex-shrink-0"
+                  className="h-5 w-auto shrink-0"
                 />
                 <span>{dashboard_data?.ROI_Until_Now} USDT</span>
               </p>
@@ -122,7 +122,7 @@ const NewCardsDesignForLaptop: React.FC<Props> = ({
                   alt="USDT"
                   width={20}
                   height={20}
-                  className="flex size-5 flex-shrink-0"
+                  className="h-5 w-auto shrink-0"
                 />
                 <span>{dashboard_data?.ROI_Last_Month} USDT</span>
               </p>

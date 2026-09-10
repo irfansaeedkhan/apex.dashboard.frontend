@@ -46,7 +46,7 @@ const AvailableBalanceActionButtons: React.FC<Props> = ({
                 alt="USDT"
                 width={20}
                 height={20}
-                className="flex size-5 flex-shrink-0"
+                className="h-5 w-auto shrink-0"
               />
               <span>
                 {Math.abs(dashboard_data?.Available_Balance).toFixed(2)} USDT

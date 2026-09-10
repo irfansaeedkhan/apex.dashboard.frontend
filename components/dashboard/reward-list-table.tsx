@@ -59,17 +59,22 @@ export const RewardListTable: React.FC<Props> = ({
                       </TableCell>
                       <TableCell
                         element={"td"}
-                        className="flex h-[72px] items-center gap-1"
+                        className="h-[72px]"
                       >
-                        <Image
-                          src={"/images/USDT.png"}
-                          alt="usdt"
-                          width={100}
-                          height={18}
-                          className="size-[18px]"
-                        />
-                        <span className="opacity-60">
-                          {item?.Amount ?? "N/A"} USDT
+                        <span className="inline-flex h-full items-center gap-1">
+                          <Image
+                            src={"/images/USDT.png"}
+                            alt="usdt"
+                            width={18}
+                            height={18}
+                            className="h-[18px] w-auto shrink-0"
+                          />
+                          <span className="opacity-60">
+                            {typeof item?.Amount === "number"
+                              ? item.Amount.toFixed(2)
+                              : (item?.Amount ?? "N/A")}{" "}
+                            USDT
+                          </span>
                         </span>
                       </TableCell>
                     </TableRow>
@@ -87,8 +92,11 @@ export const RewardListTable: React.FC<Props> = ({
                       </button>
                       <button
                         onClick={handleNextPage}
-                        disabled={page === rewardListData?.Number_of_Pages}
-                        className="text-blue-shade-1 flex w-full items-center justify-center gap-2 rounded-lg  border-[1px] border-[#1414141F] bg-white px-4 py-2 text-sm disabled:opacity-50"
+                        disabled={
+                          !rewardListData?.Number_of_Pages ||
+                          page >= rewardListData.Number_of_Pages
+                        }
+                        className="text-blue-shade-1 flex w-full items-center justify-center gap-2 rounded-lg  border-[1px] border-[#1414141F] bg-white px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-50"
                       >
                         Next <HiMiniArrowRight />
                       </button>

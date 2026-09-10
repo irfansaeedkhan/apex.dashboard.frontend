@@ -78,11 +78,13 @@ export const ReferralTableMobile: React.FC<Props> = ({
                   <Image
                     src={"/images/USDT.png"}
                     alt="usdt"
-                    width={100}
+                    width={18}
                     height={18}
-                    className="size-[18px]"
+                    className="h-[18px] w-auto shrink-0"
                   />
-                  {item.MetaAsset_Purchased ?? 0} packs
+                  <span className="whitespace-nowrap">
+                    {item.MetaAsset_Purchased ?? 0} packs
+                  </span>
                 </p>
               </div>
               <div className={mainDiv}>
@@ -91,11 +93,13 @@ export const ReferralTableMobile: React.FC<Props> = ({
                   <Image
                     src={"/images/USDT.png"}
                     alt="usdt"
-                    width={100}
+                    width={18}
                     height={18}
-                    className="size-[18px]"
+                    className="h-[18px] w-auto shrink-0"
                   />
-                  {item.Royalty?.toFixed(2) ?? "0.00"} USDT
+                  <span className="whitespace-nowrap">
+                    {item.Royalty?.toFixed(2) ?? "0.00"} USDT
+                  </span>
                 </p>
               </div>
             </div>
@@ -110,8 +114,8 @@ export const ReferralTableMobile: React.FC<Props> = ({
             </button>
             <button
               onClick={handleNextPage}
-              disabled={page === totalPages}
-              className="flex w-full items-center justify-center gap-2 rounded-lg border-[1px]  border-[#1414141F] bg-white px-4 py-2 text-sm text-blue-shade-1 disabled:opacity-50"
+              disabled={!totalPages || page >= totalPages}
+              className="flex w-full items-center justify-center gap-2 rounded-lg border-[1px]  border-[#1414141F] bg-white px-4 py-2 text-sm text-blue-shade-1 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Next <HiMiniArrowRight />
             </button>
@@ -133,4 +137,4 @@ export const ReferralTableMobile: React.FC<Props> = ({
 const mainDiv = "flex w-full items-center justify-between gap-5";
 const h6 = "text-sm font-medium text-blue-shade-1 opacity-60 leading-[18px]";
 const p =
-  "text-sm font-medium text-blue-shade-1 leading-5 flex items-center gap-1";
+  "text-sm font-medium text-blue-shade-1 leading-5 flex items-center justify-end gap-1 shrink-0";

@@ -80,9 +80,9 @@ export const ReferralTable: React.FC<Props> = ({
                         <Image
                           src={"/images/USDT.png"}
                           alt="usdt"
-                          width={18}
-                          height={18}
-                          className="size-4 flex-shrink-0"
+                          width={16}
+                          height={16}
+                          className="h-4 w-auto shrink-0"
                         />
                         {item.MetaAsset_Purchased ?? 0} packs
                       </p>
@@ -92,9 +92,9 @@ export const ReferralTable: React.FC<Props> = ({
                         <Image
                           src={"/images/USDT.png"}
                           alt="usdt"
-                          width={18}
-                          height={18}
-                          className="size-4 flex-shrink-0"
+                          width={16}
+                          height={16}
+                          className="h-4 w-auto shrink-0"
                         />
                         {item.Royalty?.toFixed(2) ?? "0.00"} USDT
                       </p>
@@ -115,8 +115,8 @@ export const ReferralTable: React.FC<Props> = ({
                     </button>
                     <button
                       onClick={handleNextPage}
-                      disabled={page === totalPages}
-                      className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border-[1px]  border-[#1414141F] bg-white px-4 py-2 text-sm text-blue-shade-1 disabled:opacity-50"
+                      disabled={!totalPages || page >= totalPages}
+                      className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border-[1px]  border-[#1414141F] bg-white px-4 py-2 text-sm text-blue-shade-1 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       Next <HiMiniArrowRight />
                     </button>

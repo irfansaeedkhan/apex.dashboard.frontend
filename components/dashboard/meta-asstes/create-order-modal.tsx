@@ -90,7 +90,7 @@ export const CreateOrderModal: React.FC<Props> = ({
                     alt="USDT"
                     width={20}
                     height={20}
-                    className="flex size-5 flex-shrink-0"
+                    className="h-5 w-auto shrink-0"
                   />{" "}
                   <p className="text-blue-shade-1 text-xl font-semibold">
                     {totalamount} USDT

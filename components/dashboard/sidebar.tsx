@@ -43,9 +43,9 @@ export const Sidebar = ({ toggle, setToggle }: any) => {
           <Image
             src="/images/logo.svg"
             alt="logo"
-            width={100}
+            width={44}
             height={44}
-            className="mt-5 flex size-11 flex-shrink-0 object-cover"
+            className="mt-5 h-11 w-auto shrink-0 cursor-pointer object-contain"
             onClick={() => router.push(AppRoutes.dashboard.index)}
           />
           <div className="mt-20 w-full">

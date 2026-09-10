@@ -141,7 +141,10 @@ const LeaderboardTable: React.FC<Props> = ({
                     </button>
                     <button
                       onClick={handleNextPage}
-                      disabled={page === leaderboardList?.Number_of_Pages}
+                      disabled={
+                        !leaderboardList?.Number_of_Pages ||
+                        page >= leaderboardList.Number_of_Pages
+                      }
                       className="text-blue-shade-1 flex w-full items-center justify-center gap-2 rounded-lg  border-[1px] border-[#1414141F] bg-white px-4 py-2 text-sm disabled:opacity-50"
                     >
                       Next <HiMiniArrowRight />

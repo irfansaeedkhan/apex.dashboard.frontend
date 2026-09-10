@@ -10,9 +10,9 @@ export const LogoLink = () => {
     <Image
       src="/images/logo-dark.svg"
       alt="logo"
-      width={100}
+      width={44}
       height={44}
-      className="flex size-11 flex-shrink-0 cursor-pointer object-cover"
+      className="h-11 w-auto shrink-0 cursor-pointer object-contain"
       onClick={() => router.push(AppRoutes.dashboard.index)}
     />
   );

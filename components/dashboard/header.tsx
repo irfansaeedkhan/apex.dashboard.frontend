@@ -45,9 +45,9 @@ export const Header = ({ toggle, setToggle }: any) => {
           <Image
             src="/images/logo-dark.svg"
             alt="logo"
-            width={1080}
-            height={1055}
-            className="flex w-10 flex-shrink-0 object-cover md:hidden"
+            width={40}
+            height={40}
+            className="h-auto w-10 shrink-0 cursor-pointer object-contain md:hidden"
             onClick={() => router.push(AppRoutes.dashboard.index)}
           />
           <div className="hidden items-center gap-4 lg:flex">

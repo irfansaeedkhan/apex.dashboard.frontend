@@ -9,7 +9,20 @@ interface Props {
 }
 
 export const RewardsCard: React.FC<Props> = ({ refferalRewards }: Props) => {
-  console.log("refferalRewards::", refferalRewards);
+  const totAssetValue =
+    refferalRewards?.RefferalRewardsStats?.Tot_Asset_Value;
+  const hasTotAssetValue =
+    totAssetValue !== undefined &&
+    totAssetValue !== null &&
+    totAssetValue !== -1;
+
+  const salesCommission =
+    refferalRewards?.RefferalRewardsStats?.Sales_Commission;
+  const hasSalesCommission =
+    salesCommission !== undefined &&
+    salesCommission !== null &&
+    salesCommission !== -1;
+
   return (
     <div className="flex w-full flex-col gap-8 rounded-2xl bg-white py-6">
       <div className="flex flex-col px-6">
@@ -27,72 +40,28 @@ export const RewardsCard: React.FC<Props> = ({ refferalRewards }: Props) => {
               </p>
             </div>
             <div className="hidden items-center gap-1 text-2xl font-bold text-blue-shade-1 sm:flex">
-              {refferalRewards?.RefferalRewardsStats?.Tot_Asset_Value !==
-                undefined &&
-              refferalRewards?.RefferalRewardsStats?.Tot_Asset_Value !== null &&
-              refferalRewards?.RefferalRewardsStats?.Tot_Asset_Value !== -1 ? (
-                <>
-                  <span>
-                    <Image
-                      src={"/images/USDT.png"}
-                      alt="usdt"
-                      width={100}
-                      height={22}
-                      className="size-[22px]"
-                    />
-                    {refferalRewards?.RefferalRewardsStats?.Tot_Asset_Value}
-                  </span>
-                  <span>USDT</span>
-                </>
-              ) : (
-                // <span>N/A</span>
-                <>
-                  <Image
-                    src={"/images/USDT.png"}
-                    alt="usdt"
-                    width={100}
-                    height={22}
-                    className="size-[22px]"
-                  />
-                  <span>0</span>
-                  <span>USDT</span>
-                </>
-              )}
+              <Image
+                src={"/images/USDT.png"}
+                alt="usdt"
+                width={22}
+                height={22}
+                className="h-[22px] w-auto shrink-0"
+              />
+              <span>{hasTotAssetValue ? totAssetValue : 0}</span>
+              <span>USDT</span>
             </div>
           </div>
         </div>
         <div className="mt-8 flex items-center gap-1 text-2xl font-bold text-blue-shade-1 sm:hidden">
-          {refferalRewards?.RefferalRewardsStats?.Tot_Asset_Value !==
-            undefined &&
-          refferalRewards?.RefferalRewardsStats?.Tot_Asset_Value !== null &&
-          refferalRewards?.RefferalRewardsStats?.Tot_Asset_Value !== -1 ? (
-            <>
-              <Image
-                src={"/images/USDT.png"}
-                alt="usdt"
-                width={100}
-                height={22}
-                className="size-[22px]"
-              />
-              <span>
-                {refferalRewards?.RefferalRewardsStats?.Tot_Asset_Value}
-              </span>
-              <span>USDT</span>
-            </>
-          ) : (
-            // <span>N/A</span>
-            <>
-              <Image
-                src={"/images/USDT.png"}
-                alt="usdt"
-                width={100}
-                height={22}
-                className="size-[22px]"
-              />
-              <span>0</span>
-              <span>USDT</span>
-            </>
-          )}
+          <Image
+            src={"/images/USDT.png"}
+            alt="usdt"
+            width={22}
+            height={22}
+            className="h-[22px] w-auto shrink-0"
+          />
+          <span>{hasTotAssetValue ? totAssetValue : 0}</span>
+          <span>USDT</span>
         </div>
       </div>
       <hr />
@@ -114,20 +83,19 @@ export const RewardsCard: React.FC<Props> = ({ refferalRewards }: Props) => {
         <div className={mainWrap}>
           <h3 className={firstChild}>Referrals Assets Value</h3>
           <h3 className={secondChild}>
-            {refferalRewards?.RefferalRewardsStats?.Tot_Asset_Value !==
-              undefined &&
-            refferalRewards?.RefferalRewardsStats?.Tot_Asset_Value !== null &&
-            refferalRewards?.RefferalRewardsStats?.Tot_Asset_Value !== -1 ? (
-              <span>
+            {hasTotAssetValue ? (
+              <span className="inline-flex items-center gap-1">
                 <Image
                   src={"/images/USDT.png"}
                   alt="usdt"
                   width={16}
-                  height={15}
-                  className="size-[16px]"
+                  height={16}
+                  className="h-4 w-auto shrink-0"
                 />
-                {refferalRewards?.RefferalRewardsStats?.Tot_Asset_Value}
-                &nbsp;USDT
+                <span>
+                  {totAssetValue}
+                  &nbsp;USDT
+                </span>
               </span>
             ) : (
               <span>N/A</span>
@@ -153,20 +121,19 @@ export const RewardsCard: React.FC<Props> = ({ refferalRewards }: Props) => {
         <div className={mainWrap}>
           <h3 className={firstChild}>Weekly Commission Income</h3>
           <h3 className={secondChild}>
-            {refferalRewards?.RefferalRewardsStats?.Sales_Commission !==
-              undefined &&
-            refferalRewards?.RefferalRewardsStats?.Sales_Commission !== null &&
-            refferalRewards?.RefferalRewardsStats?.Sales_Commission !== -1 ? (
-              <span>
+            {hasSalesCommission ? (
+              <span className="inline-flex items-center gap-1">
                 <Image
                   src={"/images/USDT.png"}
                   alt="usdt"
                   width={16}
-                  height={15}
-                  className="size-[16px]"
+                  height={16}
+                  className="h-4 w-auto shrink-0"
                 />
-                {refferalRewards?.RefferalRewardsStats?.Sales_Commission}
-                &nbsp;USDT
+                <span>
+                  {salesCommission}
+                  &nbsp;USDT
+                </span>
               </span>
             ) : (
               <span>N/A</span>
@@ -181,4 +148,4 @@ export const RewardsCard: React.FC<Props> = ({ refferalRewards }: Props) => {
 const mainWrap = "flex items-center justify-between gap-3";
 const firstChild = "text-gray-shade-1 sm:text-sm text-[13px] font-medium";
 const secondChild =
-  "flex items-center gap-1  text-blue-shade-1 text-sm font-medium";
+  "flex items-center gap-1 text-blue-shade-1 text-sm font-medium";

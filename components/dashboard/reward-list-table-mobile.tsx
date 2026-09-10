@@ -33,15 +33,20 @@ export const RewardListTableMobile: React.FC<Props> = ({
             </div>
             <div className={mainDiv}>
               <h6 className={h6}>Amount</h6>
-              <p className={p}>
+              <p className={`${p} justify-end text-right`}>
                 <Image
                   src={"/images/USDT.png"}
                   alt="usdt"
-                  width={100}
+                  width={18}
                   height={18}
-                  className="size-[18px]"
+                  className="h-[18px] w-auto shrink-0"
                 />
-                {item?.Amount ?? "N/A"} USDT
+                <span className="whitespace-nowrap">
+                  {typeof item?.Amount === "number"
+                    ? item.Amount.toFixed(2)
+                    : (item?.Amount ?? "N/A")}{" "}
+                  USDT
+                </span>
               </p>
             </div>
             <div className={mainDiv}>
@@ -67,8 +72,11 @@ export const RewardListTableMobile: React.FC<Props> = ({
           </button>
           <button
             onClick={handleNextPage}
-            disabled={page === rewardListData?.Number_of_Pages}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border-[1px]  border-[#1414141F] bg-white px-4 py-2 text-sm text-blue-shade-1 disabled:opacity-50"
+            disabled={
+              !rewardListData?.Number_of_Pages ||
+              page >= rewardListData.Number_of_Pages
+            }
+            className="flex w-full items-center justify-center gap-2 rounded-lg border-[1px]  border-[#1414141F] bg-white px-4 py-2 text-sm text-blue-shade-1 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Next <HiMiniArrowRight />
           </button>
@@ -81,4 +89,4 @@ export const RewardListTableMobile: React.FC<Props> = ({
 const mainDiv = "flex w-full items-center justify-between gap-5";
 const h6 = "text-sm font-medium text-blue-shade-1 opacity-60 leading-[18px]";
 const p =
-  "text-sm font-medium text-blue-shade-1 leading-5 flex items-center gap-1";
+  "text-sm font-medium text-blue-shade-1 leading-5 flex items-center gap-1 shrink-0";

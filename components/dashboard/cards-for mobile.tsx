@@ -57,7 +57,7 @@ const CardsForMobile: React.FC<Props> = ({
                 alt="USDT"
                 width={20}
                 height={20}
-                className="flex size-5 flex-shrink-0"
+                className="h-5 w-auto shrink-0"
               />
               <span>{dashboard_data?.Lands_Value} USDT</span>
             </p>
@@ -99,7 +99,7 @@ const CardsForMobile: React.FC<Props> = ({
                 alt="USDT"
                 width={20}
                 height={20}
-                className="flex size-5 flex-shrink-0"
+                className="h-5 w-auto shrink-0"
               />
               <span> {dashboard_data?.Company_Lands_Value} USDT</span>
             </p>
@@ -133,7 +133,7 @@ const CardsForMobile: React.FC<Props> = ({
                 alt="USDT"
                 width={20}
                 height={20}
-                className="flex size-5 flex-shrink-0"
+                className="h-5 w-auto shrink-0"
               />
               <span>{dashboard_data?.ROI_Last_Month} USDT</span>
               {/* <span className="text-blue-shade-4">+3.75%</span> */}
@@ -149,7 +149,7 @@ const CardsForMobile: React.FC<Props> = ({
                 alt="USDT"
                 width={20}
                 height={20}
-                className="flex size-5 flex-shrink-0"
+                className="h-5 w-auto shrink-0"
               />
               <span>{dashboard_data?.ROI_Until_Now} USDT</span>
               {/* <span className="text-blue-shade-4">+4.5%</span> */}
@@ -198,7 +198,7 @@ const CardsForMobile: React.FC<Props> = ({
                 alt="USDT"
                 width={20}
                 height={20}
-                className="flex size-5 flex-shrink-0"
+                className="h-5 w-auto shrink-0"
               />
               <span>
                 {Math.abs(dashboard_data?.Available_Balance).toFixed(2)} USDT
