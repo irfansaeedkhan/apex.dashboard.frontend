@@ -2,6 +2,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
+import { filterChartMonths } from "@/utils/filter-chart-months";
 
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
@@ -15,18 +16,27 @@ type Series = {
 
 interface Props {
   graphData: { [key: string]: number }[];
+  selectedYear?: string;
 }
 
-export const TransactionChartMobile: React.FC<Props> = ({ graphData }) => {
+export const TransactionChartMobile: React.FC<Props> = ({
+  graphData,
+  selectedYear,
+}) => {
   const [seriesData, setSeriesData] = useState<Series[]>([]);
   const [optionsData, setOptionsData] = useState<ApexOptions>({});
+
+  // Round 1: never plot future months of the current year.
+  const visibleData = selectedYear
+    ? filterChartMonths(graphData, selectedYear)
+    : graphData;
 
   const updateChartData = useCallback(() => {
     setSeriesData([
       {
         name: "Revenue",
         color: "#47D366",
-        data: graphData.map((data) => {
+        data: visibleData.map((data) => {
           const value = Object.values(data)[0];
           if (typeof value === "number") {
             return value;
@@ -56,7 +66,7 @@ export const TransactionChartMobile: React.FC<Props> = ({ graphData }) => {
         enabled: false,
       },
       xaxis: {
-        categories: graphData.map((data) => Object.keys(data)[0]),
+        categories: visibleData.map((data) => Object.keys(data)[0]),
         position: "top",
         labels: {
           formatter: function (val: any) {
@@ -93,7 +103,7 @@ export const TransactionChartMobile: React.FC<Props> = ({ graphData }) => {
         },
       },
     });
-  }, [graphData]);
+  }, [visibleData]);
 
   useEffect(() => {
     updateChartData();

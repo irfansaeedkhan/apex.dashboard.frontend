@@ -25,7 +25,10 @@ export const TransactionTable: React.FC<Props> = ({
           Transactions
         </span>
         <span className="flex h-[22px] w-[30px] items-center justify-center rounded-2xl border border-green-shade-1 bg-green-shade-2 px-2 text-xs font-medium leading-[18px] text-green-shade-3">
-          {dashboardData?.transactions_list &&
+          {/* Round 1: badge used to show the page size (5). It now
+              shows the total transaction count, falling back to the
+              page length only if the total is absent. */}
+          {dashboardData?.transactions_total ??
             dashboardData?.transactions_list?.length}
           {!dashboardData?.transactions_list?.length && "N/A"}
         </span>

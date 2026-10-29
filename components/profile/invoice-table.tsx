@@ -141,7 +141,12 @@ export const InvoiceTable = () => {
                   key={invoice?.Date}
                   className="overflow-x-aut h-[72px] w-full !bg-white px-6 py-4 text-sm text-blue-shade-1 opacity-60 last:rounded-b-2xl"
                 >
-                  <TableCell element={"td"}>{invoice?.Duration}</TableCell>
+                  {/* Round 1: Duration was a bare number. The contract
+                      runs 2024-05-30 to 2027-05-30, 36 months, so the
+                      unit is months. */}
+                  <TableCell element={"td"}>
+                    {invoice?.Duration} months
+                  </TableCell>
                   <TableCell element={"td"}>{invoice?.Qty}</TableCell>
                   <TableCell element={"td"}>
                     <span className="inline-flex items-center gap-1">

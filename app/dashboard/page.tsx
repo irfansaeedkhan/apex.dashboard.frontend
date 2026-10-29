@@ -203,7 +203,7 @@ const Dashboard = () => {
           <p className="text-blue-shade-1">
             Hello and{" "}
             <span className="font-bold text-blue-shade-1">
-              Welcome {user?.Name} Jhon 👋
+              Welcome {user?.Name} {user?.Surname} 👋
             </span>
           </p>
         </div>
@@ -259,10 +259,13 @@ const Dashboard = () => {
               />
             </div>
             <div className="hidden w-full md:block">
-              <TransactionChart graphData={graphData} />
+              <TransactionChart graphData={graphData} selectedYear={selectedYear} />
             </div>
             <div className="block w-full md:hidden">
-              <TransactionChartMobile graphData={graphData} />
+              <TransactionChartMobile
+                graphData={graphData}
+                selectedYear={selectedYear}
+              />
             </div>
           </div>
         ) : null

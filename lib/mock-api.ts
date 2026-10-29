@@ -106,9 +106,12 @@ const leaderboard = Array.from({ length: 10 }, (_, index) => ({
 }));
 
 const invoices = [
-  { Amount: 1000, Date: "2026-08-18", Duration: 36, Qty: 2, SinglePackCost: 1000, TotalAmount: 2000 },
+  // Round 1: Amount used to be 1000 on every row, so the invoice table
+  // showed the same total regardless of quantity. Amount is now
+  // Qty x SinglePackCost and matches TotalAmount on every row.
+  { Amount: 2000, Date: "2026-08-18", Duration: 36, Qty: 2, SinglePackCost: 1000, TotalAmount: 2000 },
   { Amount: 1000, Date: "2026-06-10", Duration: 36, Qty: 1, SinglePackCost: 1000, TotalAmount: 1000 },
-  { Amount: 1000, Date: "2026-04-02", Duration: 36, Qty: 3, SinglePackCost: 1000, TotalAmount: 3000 },
+  { Amount: 3000, Date: "2026-04-02", Duration: 36, Qty: 3, SinglePackCost: 1000, TotalAmount: 3000 },
 ];
 
 export const demoProfile = { ...demoUser, Phone: "+1 555 010 2026", Country: "United States" };
@@ -143,6 +146,9 @@ export function getMockResponse(url = "", method = "get", config: any = {}) {
       ...dashboardBase,
       Number_of_Pages: paged.Number_of_Pages,
       Page_size: PAGE_SIZE,
+      // Round 1: the transactions badge used to show the page size (5).
+      // This total lets it show all 10 transactions instead.
+      transactions_total: allTransactions.length,
       transactions_list: paged.items,
     };
   }
@@ -155,7 +161,11 @@ export function getMockResponse(url = "", method = "get", config: any = {}) {
       RevenuesHistory: paged.items,
     };
   }
-  if (path === "user/referrals/count") return 12;
+  // Round 1: the referrals table lists 8 people, so the joined count
+  // is 8, not 12. The RewardsCard stats are reconciled to this list in
+  // lib/auth/get-rewards.ts (18 packs, 18000 USDT value, 1440 USDT
+  // weekly commission).
+  if (path === "user/referrals/count") return affiliates.length;
   if (path === "user/referrals") return { offset: (page - 1) * 5, limit: 5, total: affiliates.length, data: affiliates.slice((page - 1) * 5, page * 5) };
   if (path === "LeaderBoard") return { Number_of_Pages: 2, LeaderBoard: leaderboard.slice((page - 1) * 5, page * 5) };
   if (path === "Invoices") return { Number_of_Pages: 1, Invoices: invoices };

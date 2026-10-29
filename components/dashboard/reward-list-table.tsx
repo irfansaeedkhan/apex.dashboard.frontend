@@ -43,12 +43,9 @@ export const RewardListTable: React.FC<Props> = ({
                       key={i}
                       className="text-blue-shade-1 h-[72px] w-full overflow-x-auto bg-white px-6 py-4 text-sm last:rounded-b-2xl"
                     >
-                      <TableCell
-                        element={"td"}
-                        className="opacity-60 last:rounded-br-2xl"
-                      >
-                        {item?.Type ?? "N/A"}
-                      </TableCell>
+                      {/* Round 1: rows used to render Type, Date,
+                          Amount under Date, Amount, Type headers.
+                          Row order now matches the headers. */}
                       <TableCell
                         element={"td"}
                         className="opacity-60 first:rounded-bl-2xl"
@@ -76,6 +73,12 @@ export const RewardListTable: React.FC<Props> = ({
                             USDT
                           </span>
                         </span>
+                      </TableCell>
+                      <TableCell
+                        element={"td"}
+                        className="opacity-60 last:rounded-br-2xl"
+                      >
+                        {item?.Type ?? "N/A"}
                       </TableCell>
                     </TableRow>
                   );

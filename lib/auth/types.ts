@@ -14,6 +14,9 @@ export type DashboardApiResponse = {
   Onwhitdraw_balance: number;
   Number_of_Pages: number;
   Page_size: number;
+  // Round 1: total transaction count, so the badge shows all
+  // transactions instead of the current page size.
+  transactions_total?: number;
   Owned_Lands: number;
   ROI_Last_Month: number;
   ROI_Until_Now: number;

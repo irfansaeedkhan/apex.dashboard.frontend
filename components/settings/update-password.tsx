@@ -76,7 +76,13 @@ export const UpdatePassword: React.FC<Props> = ({ getProfileData }) => {
           </h1>
           <p className="text-xs font-medium tracking-[-0.28px] text-blue-shade-1 opacity-60">
             Last updated{" "}
-            {moment(user?.PasswordResetAt).startOf("day").fromNow()}
+            {user?.PasswordResetAt &&
+            moment(user.PasswordResetAt).isValid()
+              ? moment(user.PasswordResetAt).startOf("day").fromNow()
+              : // Round 1: the demo user has no reset date, and
+                // moment("") rendered "Invalid date". "Never" is
+                // the honest value, not an invented date.
+                "Never"}
           </p>
         </div>
       </div>
