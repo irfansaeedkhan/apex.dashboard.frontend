@@ -11,14 +11,10 @@ import { ReferralAddressCard } from "@/components/profile/referrals-address-card
 import { PersonalInfoCard } from "@/components/profile/personal-info-card";
 import { DepositAddressMobileCard } from "@/components/profile/deposit-address-mobile-card";
 
+// Round 1: EVM networks first. The demo wallet address is an EVM
+// (0x) address, so it must never be presented under the TRON label,
+// which was the old default and a loss risk.
 const networks: any[] = [
-  {
-    label: "USDT",
-    network: "TRON",
-    value: "usdt-trc20",
-    icon1: "/images/USDT.png",
-    icon2: "/images/tron.png",
-  },
   {
     label: "USDT",
     network: "Ethereum",
@@ -32,6 +28,13 @@ const networks: any[] = [
     value: "usdt-bep20",
     icon1: "/images/USDT.png",
     icon2: "/images/bnb.png",
+  },
+  {
+    label: "USDT",
+    network: "TRON",
+    value: "usdt-trc20",
+    icon1: "/images/USDT.png",
+    icon2: "/images/tron.png",
   },
 ];
 
@@ -57,12 +60,18 @@ const MyProfile = () => {
       <div className="flex flex-1 flex-col gap-6">
         <ReferralAddressCard {...profileData} />
         <div className="block flex-1 lg:hidden">
-          <DepositAddressMobileCard networks={networks} />
+          <DepositAddressMobileCard
+            networks={networks}
+            walletAddress={profileData?.WalletAddress}
+          />
         </div>
         <PersonalInfoCard {...profileData} />
       </div>
       <div className="hidden flex-1 lg:flex">
-        <DepositAddressCard networks={networks} />
+        <DepositAddressCard
+          networks={networks}
+          walletAddress={profileData?.WalletAddress}
+        />
       </div>
     </div>
   );

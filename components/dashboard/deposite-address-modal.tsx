@@ -53,6 +53,13 @@ export const DepositeAddressModal: React.FC<Props> = ({
         <p className="font-inter text-xs font-medium text-blue-shade-1">
           Scan QR code or copy address
         </p>
+        {/* Round 1: the modal used to show the address with no network
+            at all, while the profile labelled it TRON. This is an EVM
+            address for Ethereum and BNB Smart Chain only. */}
+        <p className="font-inter text-xs font-medium text-blue-shade-1 opacity-60">
+          Network: EVM (Ethereum / BNB Smart Chain). Do not send TRON
+          (TRC-20) USDT to this address.
+        </p>
         <div className="flex h-12 w-full items-center justify-between gap-8 rounded-[14px] border border-black-shade-1/[12%] bg-white px-[18px] py-[14px]">
           <p className="font-inter text-sm font-medium text-blue-shade-1">
             {sliceAccountAddress(wallet_address)}

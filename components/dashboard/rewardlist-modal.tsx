@@ -29,7 +29,7 @@ export const RewardListlModal: React.FC<Props> = ({
       onClose={onClose}
       modalContentClassName="h-auto rounded-2xl sm:max-w-[800px] max-w-[343px]"
       shouldCloseOnOverlayClick={false}
-      shouldCloseOnEsc={false}
+      shouldCloseOnEsc={true}
     >
       <div className="flex w-full flex-col gap-8">
         <div className="flex items-center justify-between gap-5">

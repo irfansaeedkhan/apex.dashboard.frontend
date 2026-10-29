@@ -84,4 +84,8 @@ export type NetworkOption = {
 
 export type NetworkList = {
   networks: NetworkOption[];
+  // Round 1: the account's real wallet address. The cards used to
+  // hardcode a different, truncated address, which did not match the
+  // deposit modal and was a loss risk if copied.
+  walletAddress?: string;
 };
