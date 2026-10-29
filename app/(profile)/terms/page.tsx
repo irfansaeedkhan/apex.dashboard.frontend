@@ -1,146 +1,80 @@
-"use client";
 import React from "react";
 
-const MyInvoice = () => {
+/**
+ * Round 1: this page used to contain copied OKX terms (OKCoin Europe
+ * LTD, APEX Bahamas FinTech, APEX Hong Kong FinTech, APEX SG, dated
+ * February 23, 2024). None of that belongs to Apex Order, so it was
+ * replaced with Apex Order terms. No licence number, registration
+ * number, or legal entity detail is stated here, because none is on
+ * record in the repository; full legal clearance is an Irfan decision.
+ * Last updated is the real date of this rewrite.
+ */
+const sections: { title: string; body: string }[] = [
+  {
+    title: "1. Who these terms are for",
+    body: "These terms apply to your use of the Apex Order platform, including the dashboard, virtual office spaces, meta assets, and referral features. By creating an account or using the platform, you agree to these terms. If you do not agree, do not use the platform.",
+  },
+  {
+    title: "2. Eligibility",
+    body: "You must be at least 18 years old to use the platform. You are responsible for making sure your use of the platform is lawful in your jurisdiction.",
+  },
+  {
+    title: "3. Your account",
+    body: "You are responsible for keeping your sign-in details private and for everything that happens under your account. Tell support promptly if you believe your account has been accessed without your permission. You must not share your account, sell it, or use another person's account.",
+  },
+  {
+    title: "4. What the platform does",
+    body: "Apex Order offers virtual office spaces and related digital assets, with referral rewards and a dashboard for tracking your activity. Features and availability may change over time. Any purchase, reward rate, or fee is shown to you before you confirm it, and the figures shown at confirmation are the ones that apply.",
+  },
+  {
+    title: "5. Deposits and withdrawals",
+    body: "Deposit addresses are shown with their network. You must only send funds on the network named for that address. Funds sent on the wrong network, or to an address shown for a different network, may be lost and may not be recoverable. Withdrawals are processed to the address you provide, so check the address and network carefully before confirming.",
+  },
+  {
+    title: "6. Referrals",
+    body: "You may share your referral code with people who are not already platform users. Rewards are calculated from the referral figures shown on your dashboard. Misuse of the referral system, including fake accounts, may lead to rewards being withheld and your account being restricted.",
+  },
+  {
+    title: "7. Acceptable use",
+    body: "You must not use the platform for fraud, money laundering, or any unlawful purpose, and you must not interfere with the platform, scrape it in bulk, or try to bypass its security. We may restrict or close an account that breaks these terms.",
+  },
+  {
+    title: "8. Intellectual property",
+    body: "The platform, its design, and its content belong to Apex Order or its licensors. You may use them only as part of using the platform. You must not copy, resell, or reuse them outside the platform without permission.",
+  },
+  {
+    title: "9. Liability",
+    body: "The platform is provided as is. To the extent permitted by law, Apex Order is not liable for losses caused by your own actions, by wrong-network transfers, or by events outside its reasonable control. Nothing in these terms limits liability that cannot lawfully be limited.",
+  },
+  {
+    title: "10. Changes to these terms",
+    body: "We may update these terms from time to time. The version shown on this page is the current one, and the last updated date is shown at the top. Continued use of the platform after an update means you accept the updated terms.",
+  },
+  {
+    title: "11. Contact",
+    body: "For questions about these terms, contact support through the support channel shown on the dashboard.",
+  },
+];
+
+export default function TermsPage() {
   return (
-    <div className="flex flex-col gap-5 rounded-2xl bg-white px-6 py-5">
-      <div className="flex flex-col items-start justify-between gap-2 pb-10 lg:flex-row lg:items-center lg:gap-5">
-        <h3 className="text-blue-shade-1 text-xl font-semibold">
-          Terms & conditions
-        </h3>
-        <p className="text-blue-shade-1/80 text-sm font-medium">
-          Last Updated: February 23, 2024
-        </p>
-      </div>
-      <p className={pClass}>
-        <span>
-          <span className={boldClass}>Thank you for visiting APEX.xyz. </span>
-          By visiting, accessing, or using APEX.xyz and associated application
-          program interface or mobile applications (“APEX Platform”), you
-          (“User”, “user”, “You” or “you”) consent to the Terms of Service
-          (these “Terms”), so please read them carefully.
-        </span>
-        <span>
-          The Terms constitute the agreement and understanding regarding the use
-          of any or all of the Services, and any manner of accessing them,
-          between you and the following service providers (“we,” “us” or “our”)
-          depending on your residency and date of registration:
-        </span>
-        <span>
-          <span className={boldClass}>OKCoin Europe LTD, </span>a Malta limited
-          liability company (“OKC EU”), which operates under the APEX brand, for
-          Users who are residents of one of our approved operating locations
-          within the European Economic Area. The Terms of Service for such users
-          can be found here;
-        </span>
-        <span>
-          <span className={boldClass}>
-            APEX Bahamas FinTech Company Limited,{" "}
-          </span>
-          a Bahamas registered company (“APEX Bahamas”), for Users who are
-          residents of Mexico and who registered between November 16, 2022 and
-          August 28, 2023, and institutional Users who are registered on or
-          after August 29, 2023;
-        </span>
-        <span>
-          <span className={boldClass}>
-            APEX Hong Kong FinTech Company Limited,{" "}
-          </span>
-          a Hong Kong registered company (“APEX HK”), for Users who are
-          residents of Hong Kong and who registered on or after May 15, 2023;
-        </span>
-        <span>
-          <span className={boldClass}>APEX Serviços Digitais Ltda., </span>a
-          Brazil limited liability company (“APEX Brazil”), for Users who are
-          residents of Brazil and who registered on or after June 15, 2023;
-        </span>
-        <span>
-          <span className={boldClass}>APEX SG Pte. Ltd., </span>a Singapore
-          limited liability company (“APEX Singapore”), for Users who are
-          residents of Singapore and who registered on or after October 13,
-          2023;
-        </span>
-        <span>
-          <span className={boldClass}>Aux Cayes FinTech Co. Ltd., </span>a
-          Seychelles registered company (“Aux Cayes”), for all other Users
-          eligible to access and use APEX&apos;s Services.
-        </span>
-        <span>
-          Where the term “APEX” is used in these Terms, it shall mean either OKC
-          EU, APEX Bahamas, APEX HK, APEX Brazil, APEX Singapore, or Aux Cayes
-          as the case may be for their respective Users.
-        </span>
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-8 sm:px-6">
+      <h1 className="text-2xl font-semibold text-blue-shade-1">
+        Terms of Service
+      </h1>
+      <p className="text-sm text-blue-shade-1 opacity-60">
+        Apex Order. Last updated October 29, 2026.
       </p>
-      <h2 className="py-8 text-xl font-semibold leading-5 text-black">
-        2 ELIGIBILITY AND PROHIBITION OF USING OUR SERVICES & BUSINESS
-      </h2>
-      <p className={pClass}>
-        <span>
-          <span className={boldClass}>2.1 </span>
-          The Services are intended solely for Users who are Natural Persons
-          aged 18 or older. If you are a Natural Person, by accessing or using
-          our Services, you represent and warrant that you are at least 18 years
-          old. If you are registering to use the Service(s) on behalf of a legal
-          entity (e.g. corporate or institutional customers), you represent and
-          warrant that such legal entity is duly organized and validly existing
-          under the applicable laws of the jurisdiction of its organization; you
-          are duly authorized by such legal entity to act on its behalf, such
-          legal entity agrees to be responsible to us if you violate these
-          Terms, and you have not previously been suspended or removed from the
-          APEX Platform or Services. You also represent and warrant that you are
-          not on and that you will not transact with anyone on any trade or
-          economic sanctions lists of any Competent Authority, which includes
-          without limitation: Terrorism and terrorist financing - Islamic State
-          in Iraq and the Levant (Da&apos;esh), Al-Qaida, the Taliban, and
-          associated individuals, groups, undertakings, and entities, any
-          individual or entity designated by the United Arab Emirates
-          (&ldquo;Local Terrorism List&rdquo;); and the financing of
-          proliferation of weapons of mass destruction (WMDs) - Democratic
-          People&apos;s Republic of Korea: nuclear-related, other weapons of
-          mass destruction-related, and ballistic missile-related programs;
-          Islamic Republic of Iran: nuclear program; and other sanction lists
-          that may be promulgated by a Competent Authority, including but not
-          limited to the United Nations Security Council, European Union, the
-          Monetary Authority of Singapore, Hong Kong Monetary Authority, Hong
-          Kong Customs and Excise Department, or Office of Foreign Asset
-          Control. You agree to provide written certification of your compliance
-          of this Clause 2.1 as soon as reasonably practicable when requested by
-          us.
-        </span>
-        <span>
-          <span className={boldClass}>2.2 </span>
-          Note that we may not make all of the Services available in all markets
-          and jurisdictions, and may restrict or prohibit use of all or a
-          portion of the Services from Restricted Locations, which at this time
-          include Hong Kong (specifically regarding our derivatives-related
-          Services), Belgium, Cuba, France and its overseas territories
-          including Guadeloupe, French Guiana, Martinique, Mayotte, La Réunion,
-          Saint Barthélemy, Saint-Martin, Saint-Pierre-et-Miquelon, French
-          Southern and Antarctic Lands, French Polynesia, Wallis and Futuna, and
-          New Caledonia, Iran, India, Japan, North Korea, Malaysia, Singapore
-          (specifically regarding our Margin and derivatives related Services),
-          Syria, the People&apos;s Republic of China, the United States of
-          America including all U.S.A. territories like Puerto Rico, American
-          Samoa, Guam, Northern Mariana Island, and the US Virgin Islands (St.
-          Croix, St. John and St. Thomas), the Bahamas, Canada, the Netherlands,
-          the United Kingdom (specifically regarding our derivatives-related
-          Services for retail users), Ireland, Bangladesh, Bolivia, Crimea,
-          Donetsk and Luhansk of Ukraine, Uzbekistan and Malta. The content of
-          the Terms shall not be excluded from the laws of the country or region
-          under which the user belongs. As a result, if you do not meet these
-          eligibility requirements, do not use our Services. Residents of
-          Belgium, France, Ireland, Japan, the Bahamas and the Netherlands are
-          not permitted to open new accounts at APEX or access the Services if
-          they have not yet opened an account.
-        </span>
-      </p>
+      {sections.map((section) => (
+        <section key={section.title} className="flex flex-col gap-2">
+          <h2 className="text-lg font-medium text-blue-shade-1">
+            {section.title}
+          </h2>
+          <p className="text-sm leading-6 text-blue-shade-1 opacity-80">
+            {section.body}
+          </p>
+        </section>
+      ))}
     </div>
   );
-};
-
-export default MyInvoice;
-
-const pClass =
-  "flex flex-col gap-3 whitespace-pre-wrap break-words text-sm font-medium leading-6";
-
-const boldClass = "font-bold";
+}
